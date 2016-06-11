@@ -3,7 +3,7 @@ MAINTAINER Alessio Caiazza
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
-  && apt-get install -y openssh-server software-properties-common \
+  && apt-get install -y openssh-server software-properties-common apt-transport-https\
   && apt-add-repository -y ppa:ansible/ansible && apt-get update \
   && apt-get install -y ansible \
   && rm -rf /var/lib/apt/lists/*
