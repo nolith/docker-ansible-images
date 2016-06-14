@@ -1,0 +1,19 @@
+---
+language: generic
+sudo: required
+services:
+  - docker
+
+install:
+  - docker --version
+
+env:
+  - IMAGE="quay.io/nolith/ansible-test" OS_NAME="ubuntu" OS_VERSION="12.04"
+  - IMAGE="quay.io/nolith/ansible-test" OS_NAME="ubuntu" OS_VERSION="14.04"
+
+script:
+  - export IMAGE_FULL="${IMAGE}:${OS_NAME}_${OS_VERSION}"
+  - docker login -e="." -u="${QUAY_USER}" -p="${QUAY_TOKEN}" quay.io
+  - docker build -t ${IMAGE_FULL} ${OS_NAME}/${OS_VERSION}
+  - docker run --rm ${IMAGE_FULL} echo 'Hello'
+  - docker push ${IMAGE_FULL}
